@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% from "_macros.html" import card_oportunidade with context %}
+{% block titulo %}Oportunidades{% endblock %}
+{% block conteudo %}
+<section class="bloco"><div class="wrap">
+  <h2>Oportunidades</h2>
+  <p class="mut">Empregos, estágios e vagas de jovem aprendiz (exemplos demonstrativos).</p>
+  <form class="filtros" method="get" action="{{ url_for('oportunidades') }}" role="search">
+    <div class="busca"><label for="q">Palavra-chave</label><input id="q" name="q" value="{{ filtros.get('q','') }}" maxlength="100" placeholder="Ex.: estágio, dados, atendimento"></div>
+    <div><label for="tipo">Tipo</label><select id="tipo" name="tipo"><option value="">Todos</option>{% for t in TIPOS %}<option {{ 'selected' if filtros.get('tipo')==t }}>{{ t }}</option>{% endfor %}</select></div>
+    <div><label for="modalidade">Modalidade</label><select id="modalidade" name="modalidade"><option value="">Todas</option>{% for m in MODALIDADES %}<option {{ 'selected' if filtros.get('modalidade')==m }}>{{ m }}</option>{% endfor %}</select></div>
+    <div><label for="categoria">Categoria</label><select id="categoria" name="categoria"><option value="">Todas</option>{% for c in categorias %}<option {{ 'selected' if filtros.get('categoria')==c }}>{{ c }}</option>{% endfor %}</select></div>
+    <button class="btn btn-pri" type="submit">Buscar</button>
+  </form>
+  <p class="mut"><strong>{{ itens|length }}</strong> {{ 'resultado' if itens|length == 1 else 'resultados' }}{% if filtros %} · <a href="{{ url_for('oportunidades') }}">limpar filtros</a>{% endif %}</p>
+  {% if itens %}<div class="grade">{% for o in itens %}{{ card_oportunidade(o, candidatadas) }}{% endfor %}</div>
+  {% else %}<div class="vazio">Nenhuma oportunidade encontrada. Tente outra palavra-chave ou limpe os filtros.</div>{% endif %}
+</div></section>
+{% endblock %}

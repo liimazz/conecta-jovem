@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Dicas profissionais{% endblock %}
+{% block conteudo %}
+<section class="bloco"><div class="wrap">
+  <h2>Dicas profissionais</h2>
+  <p class="mut">Orientações simples para dar os primeiros passos na carreira.</p>
+  <div class="grade">
+    <article class="card"><h3>Como montar um currículo</h3>
+      <p class="mut">Use uma página, com dados de contato atualizados e um e-mail de aparência profissional.</p>
+      <p class="mut">Liste formação, cursos, projetos escolares, trabalho voluntário e habilidades. Quem não tem experiência pode destacar o que já fez e aprendeu.</p>
+      <p class="mut">Revise a ortografia e envie em PDF.</p></article>
+    <article class="card"><h3>Como se preparar para entrevistas</h3>
+      <p class="mut">Pesquise a empresa e leia a descrição da vaga com atenção.</p>
+      <p class="mut">Treine respostas para "fale sobre você" e "por que quer esta vaga", com exemplos reais da sua vida.</p>
+      <p class="mut">Chegue com antecedência, vista-se de forma adequada e prepare perguntas para o entrevistador.</p></article>
+    <article class="card"><h3>Como conseguir o primeiro emprego</h3>
+      <p class="mut">Candidate-se a vários tipos de vaga: emprego, estágio e jovem aprendiz.</p>
+      <p class="mut">Avise família, professores e amigos que você procura oportunidade. Muitas vagas surgem por indicação.</p>
+      <p class="mut">Faça cursos gratuitos para mostrar iniciativa.</p></article>
+    <article class="card"><h3>Como desenvolver habilidades profissionais</h3>
+      <p class="mut">Comunicação, trabalho em equipe, organização e responsabilidade pesam tanto quanto o conhecimento técnico.</p>
+      <p class="mut">Pratique em projetos da escola, grupos e ações voluntárias, e peça retorno às pessoas ao seu redor.</p></article>
+    <article class="card"><h3>Dicas para jovens aprendizes e estagiários</h3>
+      <p class="mut">Pergunte, anote e peça feedback. Assuma pequenas tarefas e entregue no prazo.</p>
+      <p class="mut">Conheça seus direitos: carga horária compatível com a escola, contrato formal e acompanhamento de um orientador.</p></article>
+  </div>
+  <div class="acoes"><a class="btn btn-pri" href="{{ url_for('oportunidades') }}">Ver oportunidades</a><a class="btn btn-sec" href="{{ url_for('cursos') }}">Ver cursos</a></div>
+</div></section>
+{% endblock %}

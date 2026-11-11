@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block titulo %}Conecta Jovem{% endblock %} | Conecta Jovem</title>
+<meta name="description" content="Plataforma que conecta jovens a empregos, estágios, vagas de jovem aprendiz e cursos de capacitação.">
+<link rel="icon" href="{{ url_for('static', filename='img/logo.svg') }}" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<a class="skip" href="#conteudo">Ir para o conteúdo</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="{{ url_for('inicio') }}"><img src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="28" height="28">Conecta <b>Jovem</b></a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav class="menu" id="menu" aria-label="Principal">
+      {% set ep = request.endpoint or '' %}
+      <a href="{{ url_for('inicio') }}" class="{{ 'ativo' if ep == 'inicio' }}">Início</a>
+      <a href="{{ url_for('oportunidades') }}" class="{{ 'ativo' if ep.startswith('oportunidade') }}">Oportunidades</a>
+      <a href="{{ url_for('cursos') }}" class="{{ 'ativo' if ep == 'cursos' }}">Cursos</a>
+      <a href="{{ url_for('dicas') }}" class="{{ 'ativo' if ep == 'dicas' }}">Dicas</a>
+      <a href="{{ url_for('ods') }}" class="{{ 'ativo' if ep == 'ods' }}">ODS 8</a>
+      {% if usuario %}
+        {% if usuario.is_admin %}<a href="{{ url_for('painel_admin') }}" class="{{ 'ativo' if ep.startswith('admin') or ep == 'painel_admin' }}">Painel</a>{% endif %}
+        <a href="{{ url_for('perfil') }}" class="{{ 'ativo' if ep == 'perfil' }}">Meu perfil</a>
+        <form method="post" action="{{ url_for('logout') }}" style="display:inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button class="linkbtn" type="submit">Sair</button>
+        </form>
+      {% else %}
+        <a href="{{ url_for('login') }}">Entrar</a>
+        <a class="btn btn-pri btn-sm" href="{{ url_for('cadastro') }}">Criar conta</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+{% with msgs = get_flashed_messages(with_categories=true) %}
+  {% if msgs %}<div class="flashes" role="status">{% for cat, m in msgs %}<div class="flash {{ cat }}">{{ m }}</div>{% endfor %}</div>{% endif %}
+{% endwith %}
+<main id="conteudo">{% block conteudo %}{% endblock %}</main>
+<footer>
+  <div class="wrap">
+    <div><h4>Conecta Jovem</h4><p>Projeto acadêmico alinhado à ODS 8 da ONU: trabalho decente e crescimento econômico. Todas as vagas, empresas e cursos exibidos aqui são <strong>exemplos demonstrativos</strong>.</p></div>
+    <div><h4>Navegue</h4><a href="{{ url_for('oportunidades') }}">Oportunidades</a><a href="{{ url_for('cursos') }}">Cursos</a><a href="{{ url_for('dicas') }}">Dicas profissionais</a></div>
+    <div><h4>Sobre</h4><a href="{{ url_for('ods') }}">A ODS 8</a><a href="{{ url_for('api_oportunidades') }}">API de oportunidades</a><a href="{{ url_for('api_cursos') }}">API de cursos</a></div>
+  </div>
+</footer>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

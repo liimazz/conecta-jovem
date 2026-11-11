@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block titulo %}Cursos{% endblock %}
+{% block conteudo %}
+<section class="bloco"><div class="wrap">
+  <h2>Cursos de capacitação</h2>
+  <p class="mut">Cursos demonstrativos. Os links apontam para endereços de exemplo.</p>
+  <form class="form" method="get" style="grid-template-columns:minmax(200px,320px) auto;align-items:end;margin-bottom:24px">
+    <div><label for="categoria">Categoria</label><select id="categoria" name="categoria" onchange="this.form.submit()"><option value="">Todas</option>{% for c in categorias %}<option {{ 'selected' if c==categoria }}>{{ c }}</option>{% endfor %}</select></div>
+    <noscript><button class="btn btn-sec" type="submit">Filtrar</button></noscript>
+  </form>
+  {% if itens %}<div class="grade">
+  {% for c in itens %}
+    <article class="card" style="display:flex;flex-direction:column">
+      <h3>{{ c.titulo }}</h3><div class="mut">{{ c.instituicao }}</div>
+      <div class="meta"><span class="tag tipo">{{ c.categoria }}</span><span class="tag">{{ c.carga_horaria }} horas</span></div>
+      <p class="mut">{{ c.descricao }}</p>
+      <div class="rodape"><a class="btn btn-pri btn-sm" href="{{ c.link }}" target="_blank" rel="noopener noreferrer">Acessar curso</a></div>
+    </article>
+  {% endfor %}</div>
+  {% else %}<div class="vazio">Nenhum curso nesta categoria.</div>{% endif %}
+</div></section>
+{% endblock %}

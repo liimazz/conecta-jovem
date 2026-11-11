@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% from "_macros.html" import tag_status %}
+{% block titulo %}{{ ent.plural }}{% endblock %}
+{% block conteudo %}
+<section class="bloco"><div class="wrap">
+  <div class="cab"><div><a href="{{ url_for('painel_admin') }}">&larr; Painel</a><h2 style="margin-top:8px">{{ ent.plural }}</h2></div>
+    <a class="btn btn-pri" href="{{ url_for('admin_novo', chave=chave) }}">Adicionar {{ ent.singular }}</a></div>
+  {% if itens %}
+  <div class="tabela"><table>
+    <thead><tr>{% for col, rot in ent.colunas %}<th>{{ rot }}</th>{% endfor %}<th>Ações</th></tr></thead>
+    <tbody>{% for i in itens %}<tr>
+      {% for col, rot in ent.colunas %}<td>
+        {% if col == 'usuario' %}{{ i.usuario.nome }}
+        {% elif col == 'oportunidade' %}{{ i.oportunidade.titulo }}
+        {% elif col == 'status' %}{{ tag_status(i.status) }}
+        {% elif col == 'ativa' %}{{ 'Sim' if i.ativa else 'Não' }}
+        {% elif col in ('data_criacao','data_candidatura') %}{{ i[col].strftime('%d/%m/%Y') }}
+        {% else %}{{ i[col] }}{% endif %}
+      </td>{% endfor %}
+      <td class="acoes-linha">
+        <a class="btn btn-sec btn-sm" href="{{ url_for('admin_editar', chave=chave, rid=i.id) }}">Editar</a>
+        <form method="post" action="{{ url_for('admin_excluir', chave=chave, rid=i.id) }}" data-confirmar="Excluir este registro? Esta ação não pode ser desfeita.">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="btn btn-risk btn-sm" type="submit">Excluir</button></form>
+      </td></tr>{% endfor %}</tbody>
+  </table></div>
+  {% else %}<div class="vazio">Nenhum registro ainda. Use o botão acima para adicionar.</div>{% endif %}
+</div></section>
+{% endblock %}

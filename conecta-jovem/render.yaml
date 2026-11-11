@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: conecta-jovem
+    runtime: python
+    plan: starter            # disco persistente exige plano pago
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    healthCheckPath: /saude
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /var/data/banco.db
+      - key: PYTHON_VERSION
+        value: 3.12.3
+    disk:
+      name: dados
+      mountPath: /var/data
+      sizeGB: 1
