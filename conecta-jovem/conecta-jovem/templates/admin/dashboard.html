@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% from "_macros.html" import tag_status %}
+{% block titulo %}Painel administrativo{% endblock %}
+{% block conteudo %}
+<section class="bloco"><div class="wrap">
+  <h2>Painel administrativo</h2>
+  <div class="admin-nav">
+    <a class="btn btn-sec btn-sm" href="{{ url_for('admin_lista', chave='oportunidades') }}">Oportunidades</a>
+    <a class="btn btn-sec btn-sm" href="{{ url_for('admin_lista', chave='cursos') }}">Cursos</a>
+    <a class="btn btn-sec btn-sm" href="{{ url_for('admin_lista', chave='usuarios') }}">Usuários</a>
+    <a class="btn btn-sec btn-sm" href="{{ url_for('admin_lista', chave='candidaturas') }}">Candidaturas</a>
+  </div>
+  <div class="numeros">
+    <div class="numero"><strong>{{ totais.usuarios }}</strong>usuários</div>
+    <div class="numero"><strong>{{ totais.oportunidades }}</strong>oportunidades</div>
+    <div class="numero"><strong>{{ totais.cursos }}</strong>cursos</div>
+    <div class="numero"><strong>{{ totais.candidaturas }}</strong>candidaturas</div>
+  </div>
+  <div class="duas" style="margin-top:36px">
+    <div><h3>Candidaturas por status</h3>
+      {% if por_status %}<div class="meta">{% for s in STATUS %}{% if por_status.get(s) %}{{ tag_status(s) }} <strong style="margin-right:12px">{{ por_status[s] }}</strong>{% endif %}{% endfor %}</div>
+      {% else %}<p class="mut">Nenhuma candidatura ainda.</p>{% endif %}
+    </div>
+    <div><h3>Candidaturas recentes</h3>
+      {% for c in recentes %}<p>{{ c.usuario.nome }} → {{ c.oportunidade.titulo }} {{ tag_status(c.status) }}</p>{% else %}<p class="mut">Sem registros.</p>{% endfor %}
+    </div>
+  </div>
+</div></section>
+{% endblock %}

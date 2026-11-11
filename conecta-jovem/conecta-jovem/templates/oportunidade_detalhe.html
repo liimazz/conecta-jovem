@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from "_macros.html" import tag_status %}
+{% block titulo %}{{ op.titulo }}{% endblock %}
+{% block conteudo %}
+<section class="bloco"><div class="wrap" style="max-width:820px">
+  <a href="{{ url_for('oportunidades') }}">&larr; Voltar às oportunidades</a>
+  <div class="painel" style="margin-top:16px">
+    <h1 style="font-size:clamp(1.7rem,4vw,2.4rem)">{{ op.titulo }}</h1>
+    <div class="mut">{{ op.empresa }} · {{ op.localizacao }}</div>
+    <div class="meta"><span class="tag tipo">{{ op.tipo }}</span><span class="tag">{{ op.modalidade }}</span><span class="tag">{{ op.categoria }}</span>{% if not op.ativa %}<span class="tag err">Encerrada</span>{% endif %}</div>
+    <p style="white-space:pre-line">{{ op.descricao }}</p>
+    <p class="mut">Publicada em {{ op.data_criacao.strftime('%d/%m/%Y') }}</p>
+    {% if ja_candidatou %}<span class="tag ok">Você já demonstrou interesse nesta vaga</span> <a href="{{ url_for('perfil') }}">Ver no perfil</a>
+    {% elif op.ativa %}
+      <form method="post" action="{{ url_for('candidatar', oid=op.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="btn btn-pri" type="submit">Candidatar-me</button></form>
+      {% if not usuario %}<p class="mut" style="margin-top:10px">É preciso entrar na sua conta para se candidatar.</p>{% endif %}
+    {% endif %}
+  </div>
+</div></section>
+{% endblock %}

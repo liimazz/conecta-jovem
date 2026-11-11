@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% from "_macros.html" import card_oportunidade with context %}
+{% block titulo %}Seu futuro profissional começa aqui{% endblock %}
+{% block conteudo %}
+<section class="hero"><div class="wrap">
+  <div>
+    <h1>Seu futuro profissional <span>começa aqui</span></h1>
+    <p class="lead">O Conecta Jovem reúne vagas de emprego, estágio e jovem aprendiz, cursos de capacitação e dicas de carreira para quem está dando os primeiros passos no mercado de trabalho.</p>
+    <div class="acoes">
+      <a class="btn btn-pri" href="{{ url_for('oportunidades') }}">Encontrar oportunidades</a>
+      <a class="btn btn-sec" href="{{ url_for('cursos') }}">Explorar cursos</a>
+    </div>
+  </div>
+  <svg class="trilha" viewBox="0 0 420 320" role="img" aria-label="Trilha: você, capacitação, oportunidade">
+    <path class="fio" d="M60 250 C 140 250, 120 150, 200 150 S 280 70, 360 70"/>
+    <path class="fluxo" d="M60 250 C 140 250, 120 150, 200 150 S 280 70, 360 70"/>
+    <circle cx="60" cy="250" r="16" fill="#0f1b38" stroke="#22d3ee" stroke-width="3"/>
+    <circle cx="200" cy="150" r="16" fill="#0f1b38" stroke="#2f6bff" stroke-width="3"/>
+    <circle cx="360" cy="70" r="16" fill="#0f1b38" stroke="#22d3ee" stroke-width="3"/>
+    <text x="30" y="290">Você</text><text class="sub" x="30" y="308">primeiro passo</text>
+    <text x="165" y="195">Capacitação</text><text class="sub" x="165" y="213">cursos e dicas</text>
+    <text x="295" y="35">Oportunidade</text><text class="sub" x="295" y="53">vaga ou estágio</text>
+  </svg>
+</div></section>
+
+<section class="bloco"><div class="wrap">
+  <div class="cab"><h2>Oportunidades em destaque</h2><a href="{{ url_for('oportunidades') }}">Ver todas</a></div>
+  {% if destaques %}<div class="grade">{% for o in destaques %}{{ card_oportunidade(o) }}{% endfor %}</div>
+  {% else %}<div class="vazio">Nenhuma oportunidade cadastrada ainda.</div>{% endif %}
+  <p class="aviso">Vagas, empresas e instituições são exemplos fictícios criados para demonstração.</p>
+</div></section>
+
+<section class="bloco alt"><div class="wrap">
+  <h2>Como funciona</h2>
+  <div class="passos">
+    <div class="passo"><h3>Crie sua conta</h3><p class="mut">Cadastro gratuito com nome, e-mail e senha.</p></div>
+    <div class="passo"><h3>Busque e filtre</h3><p class="mut">Pesquise por palavra-chave, tipo, modalidade e categoria.</p></div>
+    <div class="passo"><h3>Candidate-se</h3><p class="mut">Demonstre interesse com um clique e evite candidaturas repetidas.</p></div>
+    <div class="passo"><h3>Acompanhe</h3><p class="mut">Veja o status de cada candidatura no seu perfil.</p></div>
+  </div>
+</div></section>
+
+<section class="bloco"><div class="wrap duas">
+  <div>
+    <h2>Impacto social: ODS 8</h2>
+    <p>A ODS 8 da Agenda 2030 busca promover crescimento econômico sustentado e trabalho decente para todos. Para os jovens, o primeiro emprego costuma ser a maior barreira: falta experiência, falta informação e as oportunidades estão espalhadas.</p>
+    <p>O Conecta Jovem aproxima esses três pontos em um só lugar: oportunidades, capacitação e orientação.</p>
+    <a class="btn btn-sec" href="{{ url_for('ods') }}">Entenda a ODS 8</a>
+  </div>
+  <div>
+    <h3>Números desta demonstração</h3>
+    <div class="numeros">
+      <div class="numero"><strong>{{ numeros.vagas }}</strong>vagas de exemplo</div>
+      <div class="numero"><strong>{{ numeros.cursos }}</strong>cursos de exemplo</div>
+      <div class="numero"><strong>{{ numeros.jovens }}</strong>jovens cadastrados</div>
+      <div class="numero"><strong>{{ numeros.candidaturas }}</strong>candidaturas</div>
+    </div>
+    <p class="aviso">Estes números vêm do banco de dados da demonstração. Não representam estatísticas reais de emprego.</p>
+  </div>
+</div></section>
+{% endblock %}

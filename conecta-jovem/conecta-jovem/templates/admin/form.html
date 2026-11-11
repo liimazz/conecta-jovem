@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block titulo %}{{ 'Editar' if obj else 'Adicionar' }} {{ ent.singular }}{% endblock %}
+{% block conteudo %}
+<section class="bloco"><div class="wrap" style="max-width:720px">
+  <a href="{{ url_for('admin_lista', chave=chave) }}">&larr; {{ ent.plural }}</a>
+  <div class="painel" style="margin-top:16px">
+    <h2>{{ 'Editar' if obj else 'Adicionar' }} {{ ent.singular }}</h2>
+    <form class="form" method="post" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      {% for c in campos %}
+      <div>
+        {% if c.tipo == 'checkbox' %}
+          <label><input type="checkbox" name="{{ c.nome }}" {{ 'checked' if valores.get(c.nome) }}>{{ c.rotulo }}</label>
+        {% else %}
+          <label for="{{ c.nome }}">{{ c.rotulo }}</label>
+          {% if c.tipo == 'textarea' %}<textarea id="{{ c.nome }}" name="{{ c.nome }}">{{ valores.get(c.nome,'') }}</textarea>
+          {% elif c.tipo == 'select' %}<select id="{{ c.nome }}" name="{{ c.nome }}"><option value="">Selecione</option>
+            {% for v, rot in c.opcoes %}<option value="{{ v }}" {{ 'selected' if valores.get(c.nome)|string == v|string }}>{{ rot }}</option>{% endfor %}</select>
+          {% else %}<input id="{{ c.nome }}" name="{{ c.nome }}" type="{{ c.tipo }}" value="{{ '' if c.tipo == 'password' else valores.get(c.nome,'') }}" {% if c.maximo and c.tipo != 'number' %}maxlength="{{ c.maximo }}"{% endif %} {% if c.tipo == 'number' %}min="{{ c.minimo }}" max="{{ c.maximo }}"{% endif %} {{ 'autocomplete=new-password' if c.tipo == 'password' }}>
+          {% endif %}
+        {% endif %}
+      </div>
+      {% endfor %}
+      <button class="btn btn-pri" type="submit">Salvar</button>
+    </form>
+  </div>
+</div></section>
+{% endblock %}

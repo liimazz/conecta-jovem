@@ -1,0 +1,19 @@
+{% macro card_oportunidade(o, candidatadas=()) %}
+<article class="card" style="display:flex;flex-direction:column">
+  <h3>{{ o.titulo }}</h3>
+  <div class="mut">{{ o.empresa }} · {{ o.localizacao }}</div>
+  <div class="meta"><span class="tag tipo">{{ o.tipo }}</span><span class="tag">{{ o.modalidade }}</span><span class="tag">{{ o.categoria }}</span></div>
+  <p class="mut">{{ o.descricao|truncate(120) }}</p>
+  <div class="rodape">
+    <a class="btn btn-sec btn-sm" href="{{ url_for('oportunidade_detalhe', oid=o.id) }}">Ver detalhes</a>
+    {% if o.id in candidatadas %}<span class="tag ok" style="align-self:center">Candidatura enviada</span>
+    {% else %}
+    <form method="post" action="{{ url_for('candidatar', oid=o.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="btn btn-pri btn-sm" type="submit">Tenho interesse</button></form>
+    {% endif %}
+  </div>
+</article>
+{% endmacro %}
+
+{% macro tag_status(s) %}
+<span class="tag {{ {'Enviada':'info','Em análise':'warn','Entrevista':'tipo','Aprovada':'ok','Não selecionada':'err'}.get(s,'') }}">{{ s }}</span>
+{% endmacro %}

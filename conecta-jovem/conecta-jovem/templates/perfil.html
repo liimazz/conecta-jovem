@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from "_macros.html" import tag_status %}
+{% block titulo %}Meu perfil{% endblock %}
+{% block conteudo %}
+<section class="bloco"><div class="wrap duas">
+  <div class="painel">
+    <h2>Meus dados</h2>
+    <p class="mut">Conta {{ 'de administrador' if usuario.is_admin else 'comum' }} · criada em {{ usuario.data_criacao.strftime('%d/%m/%Y') }}</p>
+    <form class="form" method="post" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <div><label for="nome">Nome</label><input id="nome" name="nome" value="{{ usuario.nome }}" required maxlength="100"></div>
+      <div><label for="email">E-mail</label><input id="email" name="email" type="email" value="{{ usuario.email }}" required maxlength="120"></div>
+      <div><label for="senha_atual">Senha atual (somente para trocar a senha)</label><input id="senha_atual" name="senha_atual" type="password" autocomplete="current-password"></div>
+      <div><label for="nova_senha">Nova senha</label><input id="nova_senha" name="nova_senha" type="password" autocomplete="new-password"></div>
+      <button class="btn btn-pri" type="submit">Salvar alterações</button>
+    </form>
+  </div>
+  <div>
+    <h2>Minhas candidaturas</h2>
+    {% if candidaturas %}
+    <div class="tabela"><table>
+      <thead><tr><th>Oportunidade</th><th>Status</th><th>Data</th><th></th></tr></thead>
+      <tbody>{% for c in candidaturas %}<tr>
+        <td><a href="{{ url_for('oportunidade_detalhe', oid=c.oportunidade.id) }}">{{ c.oportunidade.titulo }}</a><div class="mut">{{ c.oportunidade.empresa }}</div></td>
+        <td>{{ tag_status(c.status) }}</td>
+        <td>{{ c.data_candidatura.strftime('%d/%m/%Y') }}</td>
+        <td><form method="post" action="{{ url_for('cancelar_candidatura', cid=c.id) }}" data-confirmar="Cancelar esta candidatura?"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="btn btn-risk btn-sm" type="submit">Cancelar</button></form></td>
+      </tr>{% endfor %}</tbody>
+    </table></div>
+    {% else %}<div class="vazio">Você ainda não se candidatou. <a href="{{ url_for('oportunidades') }}">Veja as oportunidades</a>.</div>{% endif %}
+  </div>
+</div></section>
+{% endblock %}
