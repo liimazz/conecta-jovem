@@ -4,11 +4,11 @@
 ## 1. IDENTIFICAÇÃO
 
 **Nome do projeto:** Conecta Jovem  
-**Integrante:** Guilherme Gomes de Lima  
-**Turma:** [PREENCHER TURMA]  
+**Integrantes:** Guilherme Gomes de Lima, Vinicius Lemos Lima, Alexandre Filipe Fernandes Rodrigues, José Vitor S. Xavier, Weverton Kauã Ferreira De Lima
+**Turma:** 2º Ano B  
 **Instituição:** SENAC  
 **Curso:** Técnico em Desenvolvimento de Sistemas  
-**CEP de referência:** [PREENCHER CEP DE REFERÊNCIA]  
+**CEP de referência:** Bairro Câmara Cascudo
 **Repositório GitHub:** https://github.com/liimazz/conecta-jovem  
 **Aplicação publicada:** https://conecta-jovem.onrender.com
 
